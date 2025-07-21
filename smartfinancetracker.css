@@ -1,0 +1,125 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-size: cover;
+    color:black;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Main Heading */
+h1 {
+    font-size: 28px;
+    color: gold;
+    margin-bottom: 20px;
+}
+
+/* Balance Display */
+p {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#balance {
+    font-weight: bold;
+    color: #4CAF50; /* Green for positive balance */
+}
+
+/* Input and Select */
+input, select, button {
+    font-size: 16px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+input {
+    width: 200px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+select {
+    width: 120px;
+    border: 1px solid black;
+    background:white;
+}
+
+/* Button Styling */
+button {
+    background-color: #4CAF50;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Transaction Summary */
+h2 {
+    margin-top: 20px;
+    font-size: 24px;
+    color: gold;
+}
+
+/* Summary Text */
+#incomeTotal {
+    color: lightgreen;
+    font-weight: bold;
+}
+
+#expenseTotal {
+    color: red;
+    font-weight: bold;
+}
+
+/* Transaction Table */
+table {
+    width: 60%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+th {
+    background: gold;
+    color: black;
+    font-size: 18px;
+}
+
+td {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    input, select, button {
+        width: 100%;
+    }
+
+    table {
+        width: 90%;
+    }
+}

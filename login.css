@@ -1,0 +1,19 @@
+.main_heading{
+    color: #00737f;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 28px; 
+}
+.img1{
+    height: 100px;
+    width: 100px;
+    border-radius:40px;
+}
+.discription{
+    font-weight: 200;
+    font-size: 10px;
+}
+.sign_up_page{
+    text-align: center;
+    color:blue;
+}

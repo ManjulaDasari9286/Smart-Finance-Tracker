@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Finance Tracker</title>
+    <link rel="stylesheet" href="calendar.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Smart Finance Tracker</h1>
+
+    <div class="finance-summary">
+        <p>Total Income: $<span id="totalIncome">3700</span></p>
+        <p>Total Expenses: $<span id="totalExpenses">1200</span></p>
+        <p>Remaining Balance: $<span id="remainingBalance">2500</span></p>
+    </div>
+
+    <div class="month-year-selector">
+        <label for="datePicker">Select Year and Month:</label>
+        <input type="month" id="datePicker" onchange="changeDate()">
+    </div>
+
+    <div class="container">
+        <div class="left-container">
+            <div class="section">
+                <h3>Income Details</h3>
+                <table>
+                    <tr><th>Date</th><th>Category</th><th>Amount</th></tr>
+                    <tr><td>2025-03-05</td><td>Salary</td><td>$3000</td></tr>
+                    <tr><td>2025-03-10</td><td>Freelance</td><td>$500</td></tr>
+                    <tr><td>2025-03-20</td><td>Investments</td><td>$200</td></tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h3>Income Summary</h3>
+                <table>
+                    <tr><th>Category</th><th>Budget</th><th>Actual</th><th>Difference</th></tr>
+                    <tr><td>Salary</td><td>$3000</td><td>$3000</td><td>$0</td></tr>
+                    <tr><td>Freelance</td><td>$600</td><td>$500</td><td>-$100</td></tr>
+                    <tr><td>Investments</td><td>$300</td><td>$200</td><td>-$100</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="header">
+                <button onclick="prevMonth()">❮ Prev</button>
+                <h2 id="monthYear"></h2>
+                <button onclick="nextMonth()">Next ❯</button>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+    </div>
+
+    <div class="pie-chart-container">
+        <div class="pie-chart-wrapper">
+            <h3>Expenses Breakdown</h3>
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+        <div class="expense-summary-wrapper">
+            <h3>Expense Summary</h3>
+            <table>
+                <tr><th>Category</th><th>Budget</th><th>Actual</th><th>Difference</th></tr>
+                <tr><td>Food</td><td>$150</td><td>$100</td><td>$50</td></tr>
+                <tr><td>Transport</td><td>$80</td><td>$50</td><td>$30</td></tr>
+                <tr><td>Rent</td><td>$500</td><td>$500</td><td>$0</td></tr>
+                <tr><td>Shopping</td><td>$300</td><td>$200</td><td>$100</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let expenses = {
+            "2025-03-05": [{ category: "Food", amount: 100 }],
+            "2025-03-10": [{ category: "Transport", amount: 50 }],
+            "2025-03-15": [{ category: "Rent", amount: 500 }],
+            "2025-03-20": [{ category: "Shopping", amount: 200 }]
+        };
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function generateCalendar(month, year) {
+            const calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+            document.getElementById("monthYear").innerText = `${["January", "February", "March", "April"][month]} ${year}`;
+
+            for (let day = 1; day <= 30; day++) {
+                let dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+                dayDiv.innerText = day;
+
+                let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                if (expenses[dateKey]) {
+                    let expenseList = document.createElement("div");
+                    expenseList.classList.add("expense-list");
+                    expenses[dateKey].forEach(exp => {
+                        expenseList.innerHTML += `${exp.category}: $${exp.amount}<br>`;
+                    });
+                    dayDiv.appendChild(expenseList);
+                }
+                calendar.appendChild(dayDiv);
+            }
+            generatePieChart();
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        function generatePieChart() {
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ["Food", "Transport", "Rent", "Shopping"],
+                    datasets: [{
+                        data: [100, 50, 500, 200],
+                        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+
+        function changeDate() {
+            let selectedDate = document.getElementById("datePicker").value;
+            let [year, month] = selectedDate.split('-');
+            currentYear = parseInt(year);
+            currentMonth = parseInt(month) - 1;
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        window.onload = () => generateCalendar(currentMonth, currentYear);
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Finance Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Finance Tracker</h1>
+        <h2>Expense Overview</h2>
+        <canvas id="expenseChart"></canvas>
+        <a href="smartfinancetrackercalendar.html">
+        <button onclick="addTransaction()">Add Transaction</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const transactions = [
+            { date: "2024-03-01", amount: 120 },
+            { date: "2024-03-05", amount: 90 },
+            { date: "2024-03-10", amount: 150 },
+            { date: "2024-03-15", amount: 200 },
+            { date: "2024-03-20", amount: 170 },
+        ];
+
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: transactions.map(t => t.date),
+                datasets: [{
+                    label: 'Expenses',
+                    data: transactions.map(t => t.amount),
+                    borderColor: '#4A90E2',
+                    fill: true,
+                    backgroundColor: 'rgba(74, 144, 226, 0.3)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
